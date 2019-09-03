@@ -34,7 +34,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -74,6 +77,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private View mapView;
     private Button btnFind;
     private RippleBackground rippleBg;
+
 
     private final float DEFAULT_ZOOM = 15;
 
@@ -235,6 +239,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.draggable(true);
+        markerOptions.title("Current Position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        //move map camera
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
 
         if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
             View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
